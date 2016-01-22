@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
-});
-
 Route::post('/task', function (Request $request) {
     $validator = Validator::make($request->all(), [
         'name' => 'required|max:255',
@@ -35,6 +27,14 @@ Route::post('/task', function (Request $request) {
     $task->save();
 
     return redirect('/');
+});
+
+Route::get('/', function () {
+    $tasks = Task::orderBy('created_at', 'asc')->get();
+
+    return view('tasks', [
+        'tasks' => $tasks
+    ]);
 });
 
 Route::delete('/task/{task}', function (Task $task) {
